@@ -7,8 +7,7 @@
     - name: Get Service Status
       systemd:
         name: "{{ service_name }}"
-        state: status
-      register: service_status
+        register: service_status
 
     - name: Display Service Status
       debug:

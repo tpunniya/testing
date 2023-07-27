@@ -1,6 +1,6 @@
 ---
 - name: Get Service List on Ubuntu
-  hosts: "{{ host }}"
+  hosts: all
   gather_facts: true
 
   tasks:

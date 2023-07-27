@@ -6,4 +6,4 @@
 
     - name: Display Hostname
       debug:
-        msg: "Hostname of the server is {{ hostname_output.stdout }}
+        msg: "Hostname of the server is {{ hostname_output.stdout }}"

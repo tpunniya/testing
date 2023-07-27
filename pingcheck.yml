@@ -2,3 +2,11 @@
   tasks:
     - name: "ping check"
       ping:
+
+    - name: Check Hostname
+      command: hostname
+      register: hostname_output
+
+    - name: Display Hostname
+      debug:
+        msg: "Hostname of the server is {{ hostname_output.stdout }}

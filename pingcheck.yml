@@ -1,8 +1,5 @@
 - hosts: all
   tasks:
-    - name: "ping check"
-      ping:
-
     - name: Check Hostname
       command: hostname
       register: hostname_output

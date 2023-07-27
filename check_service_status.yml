@@ -1,6 +1,6 @@
 ---
 - name: Check Service Status on Ubuntu
-  hosts: "{{ target_host }}"
+  hosts: "{{ targetgroup }}"
   gather_facts: true
 
   tasks:

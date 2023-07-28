@@ -8,6 +8,15 @@
       systemd:
       register: service_list
 
-    - name: Display Service List
+    - name: Debug Gathered Facts
       debug:
-        var: service_list
+      var: ansible_facts
+
+    - name: Debug Gathered Systemd Facts
+      debug:
+      var: ansible_facts.systemd
+
+    - name: Debug Gathered Service List
+      debug:
+      var: service_list
+

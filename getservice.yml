@@ -2,7 +2,6 @@
 - name: Get Service List on Ubuntu
   hosts: all
   gather_facts: true
-
   tasks:
     - name: Get Service List
       systemd:
@@ -10,13 +9,13 @@
 
     - name: Debug Gathered Facts
       debug:
-      var: ansible_facts
+        var: ansible_facts
 
     - name: Debug Gathered Systemd Facts
       debug:
-      var: ansible_facts.systemd
+        var: ansible_facts.systemd
 
-    - name: Debug Gathered Service List
+    - name: Display Service List
       debug:
-      var: service_list
+        var: service_list
 

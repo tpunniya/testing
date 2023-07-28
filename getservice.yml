@@ -6,7 +6,6 @@
   tasks:
     - name: Get Service List
       systemd:
-        state: list
       register: service_list
 
     - name: Display Service List

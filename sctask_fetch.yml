@@ -24,7 +24,8 @@
       copy:
         content: "{{ sctask_details.content | to_nice_json }}"
         dest: "C:\\temp\\sctask_details.json"
-
-    - name: Debug sctask_payload variable
-      debug:
+		
+	- name: Debug sctask_payload variable
+	  debug:
         var: sctask_payload
+        

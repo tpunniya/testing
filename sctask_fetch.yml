@@ -8,8 +8,8 @@
       uri:
         url: "https://dev110810.service-now.com/api/now/table/sc_task"
         method: GET
-        user: "your_service_now_username"
-        password: "your_service_now_password"
+        user: "admin"
+        password: "wO+LRiiV17*n"
         return_content: yes
         body_format: json
         headers:

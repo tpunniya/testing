@@ -27,11 +27,6 @@
       delegate_to: localhost
       run_once: true
 
-    - name: Transfer JSON file to the remote system
-      copy:
-        src: "/path/to/save/sctask_details.json"
-        dest: "C:/temp/sctask_details.json"
-
     - name: Display SCTask payload
       debug:
         var: sctask_payload

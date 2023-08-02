@@ -28,6 +28,10 @@
       set_fact:
         global_sctask_data: "{{ sctask_data.json }}"
 
+    - name: Print SC_task Data
+      debug:
+        var: global_sctask_data
+
     - name: Extract SCTask and Parent details
       set_fact:
         sctasks: "{{ sctask_data.json.results }}"

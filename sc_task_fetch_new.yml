@@ -1,5 +1,5 @@
 ---
-- name: Fetch Incident Data from ServiceNow
+- name: Fetch SC Task Data from ServiceNow
   hosts: localhost
   gather_facts: no
 

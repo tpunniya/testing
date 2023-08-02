@@ -20,12 +20,18 @@
       set_fact:
         sctask_payload: "{{ sctask_details.json }}"
       
-    - name: Save JSON payload to a file
+    - name: Create local JSON file from Jinja2 template
+      template:
+        src: sctask_details_template.json.j2
+        dest: "/path/to/save/sctask_details.json"
+      delegate_to: localhost
+      run_once: true
+
+    - name: Transfer JSON file to the remote system
       copy:
-        content: "{{ sctask_details.content | to_nice_json }}"
-        dest: "C:\\temp\\sctask_details.json"
-		
-	- name: Debug sctask_payload variable
-	  debug:
+        src: "/path/to/save/sctask_details.json"
+        dest: "C:/temp/sctask_details.json"
+
+    - name: Display SCTask payload
+      debug:
         var: sctask_payload
-        

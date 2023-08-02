@@ -34,9 +34,9 @@
 
     - name: Extract SCTask and Parent details
       set_fact:
-        sctasks: "{{ sctask_data.json.results }}"
+        sctasks: "{{ sctask_data.json.result }}"
         parent_map: "{{ {item.number: item} }}"
-      loop: "{{ sctask_data.json.results }}"
+      loop: "{{ sctask_data.json.result }}"
       loop_control:
         loop_var: item
 

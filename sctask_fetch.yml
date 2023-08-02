@@ -5,21 +5,21 @@
 
   tasks:
     - name: Fetch SCTask details
-      community.servicenow.snow_record:
-        instance: "https://dev110810.service-now.com"
-        username: "admin"
+      uri:
+        url: "https://dev110810.service-now.com/api/now/table/sctask"
+        method: GET
+        user: "admin"
         password: "wO+LRiiV17*n"
-        table: "sctask"  # Replace with the actual table name you want to query
-        query:
-          # Add your specific query here to filter the records (optional)
-          state: "active"
+        body_format: json
+        headers:
+          Accept: "application/json"
       register: sctask_details
 
     - name: Save JSON payload to global variable
       set_fact:
-        sctask_payload: "{{ sctask_details }}"
+        sctask_payload: "{{ sctask_details.json | from_json }}"
       
     - name: Save JSON payload to a file
       copy:
-        content: "{{ sctask_details | to_nice_json }}"
+        content: "{{ sctask_details.content }}"
         dest: "C:\\temp\\sctask_details.json"

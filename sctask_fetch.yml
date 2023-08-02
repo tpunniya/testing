@@ -8,8 +8,9 @@
       uri:
         url: "https://dev110810.service-now.com/api/now/table/task"
         method: GET
-        user: "admin"
-        password: "wO+LRiiV17*n"
+        user: "your_service_now_username"
+        password: "your_service_now_password"
+        return_content: yes
         body_format: json
         headers:
           Accept: "application/json"
@@ -17,9 +18,9 @@
 
     - name: Save JSON payload to global variable
       set_fact:
-        sctask_payload: "{{ sctask_details.json | from_json }}"
+        sctask_payload: "{{ sctask_details.json }}"
       
     - name: Save JSON payload to a file
       copy:
-        content: "{{ sctask_details.content }}"
+        content: "{{ sctask_details.content | to_nice_json }}"
         dest: "C:\\temp\\sctask_details.json"

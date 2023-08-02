@@ -6,7 +6,7 @@
   tasks:
     - name: Fetch SCTask details
       uri:
-        url: "https://dev110810.service-now.com/api/now/table/sctask"
+        url: "https://dev110810.service-now.com/api/now/table/task"
         method: GET
         user: "admin"
         password: "wO+LRiiV17*n"

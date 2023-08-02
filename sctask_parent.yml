@@ -53,9 +53,4 @@
         msg: "Parent - Number: {{ item.number }}, Short Description: {{ item.short_description }}"
       loop: "{{ parent_details | default([]) }}"
       loop_control:
-        loop_var: item	
-
-    - name: Print SC_task Data
-      debug:
-        var: global_sctask_data
-		
+        loop_var: item

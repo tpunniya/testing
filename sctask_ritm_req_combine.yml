@@ -9,7 +9,7 @@
     servicenow_password: "wO+LRiiV17*n"
   
   tasks:
-     - name: Base64 encode credentials
+    - name: Base64 encode credentials
       set_fact:
         encoded_credentials: "{{ (servicenow_user ~ ':' ~ servicenow_password) | b64encode }}"
       no_log: true

@@ -61,7 +61,7 @@
 ###
     - name: Fetch ritm data
       uri:
-        url: "{{ item.request.link }}"
+        url: "{{ sctask_data.request.link }}"
         method: GET
         headers:
           Accept: "application/json"
@@ -71,7 +71,7 @@
 
     - name: Fetch ritm data
       uri:
-        url: "{{ item.request_item.link }}"
+        url: "{{ sctask_data.request_item.link }}"
         method: GET
         headers:
           Accept: "application/json"

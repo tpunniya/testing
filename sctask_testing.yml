@@ -30,7 +30,7 @@
 
     - name: Create link
       set_fact:
-        global_req_data: "{{ sctask_data.assignment_group }}"
+        global_req_data: "{{ sctask_data.json.assignment_group }}"
 
     - name: Print link
       debug:

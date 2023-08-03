@@ -21,7 +21,7 @@
         return_content: yes
         headers:
           Accept: "application/json"
-          Authorization: "Basic {{ encoded_credentials | string }}"
+          Authorization: "Basic {{ encoded_credentials }}"
           body_format: json
         body:
           state: 1  # Open state - Change task state in ServiceNow. You may need to adjust this based on your ServiceNow instance.
@@ -37,7 +37,7 @@
         method: GET
         return_content: yes
         headers:
-          Authorization: "Basic {{ encoded_credentials | string }}"
+          Authorization: "Basic {{ encoded_credentials }}"
         body_format: json
       loop: "{{ sctask_sysids }}"
       register: sctask_details

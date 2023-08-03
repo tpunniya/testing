@@ -1,0 +1,42 @@
+---
+- name: Fetch SC Task Data from ServiceNow
+  hosts: localhost
+  gather_facts: no
+
+  vars:
+    servicenow_instance: "https://dev110810.service-now.com"
+    servicenow_user: "admin"
+    servicenow_password: "wO+LRiiV17*n"
+
+  tasks:
+    - name: Base64 encode credentials
+      set_fact:
+        encoded_credentials: "{{ (servicenow_user ~ ':' ~ servicenow_password) | b64encode }}"
+      no_log: true
+
+    - name: Fetch SC Task
+      uri:
+        url: "{{ servicenow_instance }}/api/now/table/sc_task"
+        method: GET
+        headers:
+          Accept: "application/json"
+          Authorization: "Basic {{ encoded_credentials | string }}"
+        return_content: yes
+      register: sctask_data
+      
+    - name: Create Global Var
+      set_fact:
+        global_sctask_data: "{{ sctask_data.json }}"
+
+    - name: Create link
+      set_fact:
+        global_req_data: "{{ sctask_data.assignment_group }}"
+
+    - name: Print link
+      debug:
+        var: global_req_data
+
+
+    - name: Print SC_task Data
+      debug:
+        var: global_sctask_data

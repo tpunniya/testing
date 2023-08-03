@@ -30,7 +30,7 @@
 
     - name: Extract assignment_group value
       set_fact:
-      assignment_group_value: "{{ global_sctask_data | json_query('global_sctask_data.result[0].assignment_group.value') }}"
+        assignment_group_value: "{{ sctask_data.json | json_query('result[0].assignment_group.value') }}"
 
     - name: Print link
       debug:

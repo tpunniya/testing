@@ -58,8 +58,9 @@
       loop: "{{ parent_details | default([]) }}"
       loop_control:
         loop_var: item
-
-    - name: Display Parent details
+  
+    - name: Display Parent details - additional
       debug:
-        msg: "Parent - Number: {{ parent_details[0].number }}, Short Description: {{ parent_details[0].short_description }}"
+        msg: "Parent - Number: {{ item.number }}, Short Description: {{ item.short_description }}"
+      loop: "{{ parent_details.results }}"
 

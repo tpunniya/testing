@@ -1,5 +1,5 @@
 ---
-- name: Fetch SCTask details from ServiceNow
+- name: Fetch SC Task Data from ServiceNow
   hosts: localhost
   gather_facts: no
 
@@ -7,7 +7,7 @@
     servicenow_instance: "https://dev110810.service-now.com"
     servicenow_user: "admin"
     servicenow_password: "wO+LRiiV17*n"
-  
+
   tasks:
     - name: Base64 encode credentials
       set_fact:
@@ -18,36 +18,53 @@
       uri:
         url: "{{ servicenow_instance }}/api/now/table/sc_task"
         method: GET
-        return_content: yes
         headers:
           Accept: "application/json"
-          Authorization: "Basic {{ encoded_credentials }}"
-          body_format: raw
-        body:
-          state: 1  # Open state - Change task state in ServiceNow. You may need to adjust this based on your ServiceNow instance.
-      register: sctask_response
-
-    - name: Extract SCTask sys_ids
-      set_fact:
-        sctask_sysids: "{{ sctask_response.json.result | map(attribute='sys_id') | list }}"
-
-    - name: Get RITM and Request details for each SCTask
-      uri:
-        url: "{{ servicenow_instance }}/api/now/table/sc_task/{{ item }}"
-        method: GET
+          Authorization: "Basic {{ encoded_credentials | string }}"
         return_content: yes
-        headers:
-          Authorization: "Basic {{ encoded_credentials }}"
-        body_format: raw
-      loop: "{{ sctask_sysids }}"
-      register: sctask_details
-
-    - name: Create the JSON output
+      register: sctask_data
+      
+    - name: Create Global Var
       set_fact:
-        sctask_details_json: "{{ sctask_details.results | map(attribute='json') | list }}"
+        global_sctask_data: "{{ sctask_data.json }}"
 
-    # Optionally, you can write the JSON output to a file
-    - name: Write JSON output to a file
-      copy:
-        content: "{{ sctask_details_json | to_nice_json }}"
-        dest: "/path/to/output_file.json"
+    - name: Print SC_task Data
+      debug:
+        var: global_sctask_data
+
+    - name: Extract SCTask and Parent details
+      set_fact:
+        sctasks: "{{ sctask_data.json.result }}"
+        parent_map: "{{ {item.number: item} }}"
+      loop: "{{ sctask_data.json.result }}"
+      loop_control:
+        loop_var: item
+
+    - name: Populate Parent details
+      set_fact:
+        parent_details: "{{ parent_details | default([]) + [parent_map[item.parent]] }}"
+      when: item.parent is defined
+
+    - name: Display SCTask and Parent details
+      debug:
+        msg: "SCTask - Number: {{ item.number }}, Short Description: {{ item.short_description }}, Parent: {{ item.parent | default('No Parent Found') }}"
+      loop: "{{ sctasks }}"
+      loop_control:
+        loop_var: item
+
+    - name: Display Parent details
+      debug:
+        msg: "Parent - Number: {{ item.number }}, Short Description: {{ item.short_description }}"
+      loop: "{{ parent_details | default([]) }}"
+      loop_control:
+        loop_var: item
+  
+    - name: Display Parent details - additional
+      debug:
+        msg: "Parent - Number: {{ item.number }}, Short Description: {{ item.short_description }}"
+      loop: "{{ parent_details.results }}"
+      
+    - name: Display Parent details - additional
+      debug:
+        msg: "{{ global_sctask_data.result[0].assignment_group.link }}"
+      

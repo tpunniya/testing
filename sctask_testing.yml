@@ -30,15 +30,11 @@
 
     - name: Extract assignment_group value
       set_fact:
-      assignment_group_value: "{{ output | json_query('global_sctask_data.result[0].assignment_group.value') }}"
-
-    - name: Create link
-      set_fact:
-        global_req_data: "{{ sctask_data.json.assignment_group }}"
+      assignment_group_value: "{{ global_sctask_data | json_query('global_sctask_data.result[0].assignment_group.value') }}"
 
     - name: Print link
       debug:
-        var: global_req_data
+        var: assignment_group_value
 
 
     - name: Print SC_task Data

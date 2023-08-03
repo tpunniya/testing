@@ -32,7 +32,7 @@
         sctask_sysids: "{{ sctask_response.json.result | map(attribute='sys_id') | list }}"
 
     - name: Get RITM and Request details for each SCTask
-      community.general.uri:
+      uri:
         url: "{{ servicenow_instance }}/api/now/table/sc_task/{{ item }}"
         method: GET
         return_content: yes

@@ -47,8 +47,8 @@
     - name: Print link
       debug:
         var: assignment_group_value
-        var: assignment_group_link
 
-    - name: Print SC_task Data
+
+    - name: Print value
       debug:
-        var: global_sctask_data
+        var: assignment_group_link

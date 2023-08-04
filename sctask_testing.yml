@@ -26,8 +26,8 @@
       
     - name: Create Global Var
       set_fact:
-        global_sctask_data: "{{ sctask_data.json.result }}"
-
+        global_sctask_data: "{{ sctask_data.json }}"
+        
     - name: Print details
       debug:
         msg: "SCTask - Number: {{ item.number }}, Short Description: {{ item.short_description }}, Parent: {{ item.assignment_group.link }}"

@@ -35,10 +35,11 @@
       loop_control:
         loop_var: item
       register: task_details_output
-      set_fact:
-        taskno: "{{ task_details_output.results | map(attribute='msg') | map('regex_replace', '^SCTask - Number: (.+?),.*$', '\\1') | list }}"
-        short_desc: "{{ task_details_output.results | map(attribute='msg') | map('regex_replace', '^SCTask - Number: .+?, Short Description: (.+?),.*$', '\\1') | list }}"
-        assignment_link: "{{ task_details_output.results | map(attribute='msg') | map('regex_replace', '^SCTask - Number: .+?, Short Description: .+?, Parent: (.+)$', '\\1') | list }}"
+
+    - set_fact:
+      taskno: "{{ task_details_output.results | json_query('[].msg') | map('regex_replace', '^SCTask - Number: (.+?),.*$', '\\1') | list }}"
+      short_desc: "{{ task_details_output.results | json_query('[].msg') | map('regex_replace', '^SCTask - Number: .+?, Short Description: (.+?),.*$', '\\1') | list }}"
+      assignment_link: "{{ task_details_output.results | json_query('[].msg') | map('regex_replace', '^SCTask - Number: .+?, Short Description: .+?, Parent: (.+)$', '\\1') | list }}"
 
       
     - name: Print details1

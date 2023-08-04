@@ -5,6 +5,6 @@
 
   tasks:
     - name: Install community.general collection
-      ansible.builtin.galaxy_collection:
+      community.general.ansible_galaxy:
         name: community.general
         state: present

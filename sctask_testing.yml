@@ -35,7 +35,7 @@
       loop_control:
         loop_var: item
 
-    - name: Print details
+    - name: Print details1
       set_fact:
         assignment_group_link:" {{ item.assignment_group.link }} "
         assignment_group_value:" {{ item.assignment_group.value }} "
@@ -43,10 +43,6 @@
       loop_control:
         loop_var: item
 
-    - name: Print value
-      debug:
-        msg: "{{ sctask_data.json.result.number }}"
-        
     - name: Print link
       debug:
         var: assignment_group_value

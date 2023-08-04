@@ -38,7 +38,7 @@
 
     - name: Extract request.link value
       set_fact:
-      request_link: "{{ my_output.msg | regex_findall('Parent: (.+)$') | first }}"
+      request_link: "{{ task_details_output.msg | json_query('msg | regex_findall(''Parent: (.+)$'') | first') }}"
 
 
     - name: Save values into separate variables

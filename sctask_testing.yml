@@ -42,7 +42,7 @@
         short_desc: "{{ task_details_output.results | json_query('[].msg') | map('regex_findall', 'Short Description: (\\S+)') | list }}"
         assignment_link: "{{ task_details_output.results | json_query('[].msg') | map('regex_findall', 'Parent: (\\S+)') | list }}"
       collections:
-        - community.general
+        - community.general.json_query
 
     - name: Print details1
       set_fact:

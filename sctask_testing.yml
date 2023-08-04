@@ -39,6 +39,9 @@
       set_fact:
         assignment_group_link:" {{ item.assignment_group.link }} "
         assignment_group_value:" {{ item.assignment_group.value }} "
+      loop: "{{ sctask_data.json.result }}"
+      loop_control:
+        loop_var: item
 
     - name: Print value
       debug:

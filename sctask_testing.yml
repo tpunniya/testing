@@ -40,7 +40,8 @@
       taskno: "{{ task_details_output.results | json_query('[].msg') | map('regex_replace', '^SCTask - Number: (.+?),.*$', '\\1') | list }}"
       short_desc: "{{ task_details_output.results | json_query('[].msg') | map('regex_replace', '^SCTask - Number: .+?, Short Description: (.+?),.*$', '\\1') | list }}"
       assignment_link: "{{ task_details_output.results | json_query('[].msg') | map('regex_replace', '^SCTask - Number: .+?, Short Description: .+?, Parent: (.+)$', '\\1') | list }}"
-
+    collections:
+      - community.general
       
     - name: Print details1
       set_fact:

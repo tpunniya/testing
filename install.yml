@@ -1,0 +1,10 @@
+---
+- name: Install community.general collection
+  hosts: localhost
+  gather_facts: false
+
+  tasks:
+    - name: Install community.general collection
+      ansible.builtin.galaxy_collection:
+        name: community.general
+        state: present

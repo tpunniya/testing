@@ -45,7 +45,7 @@
 
     - name: Print value
       debug:
-        msg: "{{ sctask_data.json.number }}"
+        msg: "{{ sctask_data.json.result.number }}"
         
     - name: Print link
       debug:

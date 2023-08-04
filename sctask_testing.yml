@@ -36,13 +36,13 @@
         loop_var: item
       register: task_details_output
 
-    - set_fact:
-      taskno: "{{ task_details_output.results | json_query('[].msg') | map('regex_replace', '^SCTask - Number: (.+?),.*$', '\\1') | list }}"
-      short_desc: "{{ task_details_output.results | json_query('[].msg') | map('regex_replace', '^SCTask - Number: .+?, Short Description: (.+?),.*$', '\\1') | list }}"
-      assignment_link: "{{ task_details_output.results | json_query('[].msg') | map('regex_replace', '^SCTask - Number: .+?, Short Description: .+?, Parent: (.+)$', '\\1') | list }}"
+   - set_fact:
+      taskno: "{{ task_details_output.results | json_query('[].msg') | map('regex_findall', 'Number: (\\S+)') | list }}"
+      short_desc: "{{ task_details_output.results | json_query('[].msg') | map('regex_findall', 'Short Description: (\\S+)') | list }}"
+      assignment_link: "{{ task_details_output.results | json_query('[].msg') | map('regex_findall', 'Parent: (\\S+)') | list }}"
     collections:
       - community.general
-      
+    
     - name: Print details1
       set_fact:
         assignment_group_link:" {{ item.assignment_group.link }} "

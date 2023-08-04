@@ -36,6 +36,12 @@
         loop_var: item
       register: task_details_output
 
+    - name: Display all cluster names
+      ansible.builtin.debug:
+      var: item
+      loop: "{{ sctask_data.json.result | community.general.json_query('sctask_data.json.result.assignment_group[*].link') }}"
+  
+
     - name: Save values into separate variables
       set_fact:
         taskno: "{{ task_details_output.results | json_query('[].msg') | map('regex_findall', 'Number: (\\S+)') | list }}"

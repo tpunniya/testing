@@ -28,10 +28,17 @@
       set_fact:
         global_sctask_data: "{{ sctask_data.json }}"
 
-    - name: Extract assignment_group value
-      set_fact:
-        assignment_group_value: "{{ sctask_data.json | json_query('result[0].assignment_group.value') }}"
+    - name: Print details
+      debug:
+        msg: "SCTask - Number: {{ item.number }}, Short Description: {{ item.short_description }}, Parent: {{ item.assignment_group_value.link }}"
+      loop: "{{ sctasks }}"
+      loop_control:
+        loop_var: item
 
+    - name: Print value
+      debug:
+        msg: "{{ result.json.result.assigned_to.value }}"
+        
     - name: Print link
       debug:
         var: assignment_group_value

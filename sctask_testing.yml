@@ -31,7 +31,7 @@
     - name: Print details
       debug:
         msg: "SCTask - Number: {{ item.number }}, Short Description: {{ item.short_description }}, Parent: {{ item.assignment_group_value.link }}"
-      loop: "{{ sctasks }}"
+      loop: "{{ sctask_data }}"
       loop_control:
         loop_var: item
 

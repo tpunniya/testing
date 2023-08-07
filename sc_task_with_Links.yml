@@ -38,5 +38,5 @@
         loop_var: item
       include_tasks: get_api_responses.yml
       vars:
-        encoded_credentials: "{{ encoded_credentials }}"
+        api_encoded_credentials: "{{ encoded_credentials }}"
         item: "{{ item }}"

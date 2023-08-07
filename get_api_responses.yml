@@ -21,3 +21,4 @@
 - name: Add API responses to entire values
   set_fact:
     entire_values: "{{ entire_values + [{'sctask_data': item, 'item_request_item_response': item_request_item_response.json.result, 'item_request_response': item_request_response.json.result}] }}"
+    

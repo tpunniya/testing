@@ -39,3 +39,7 @@
       vars:
         api_encoded_credentials: "{{ encoded_credentials }}"
         item: "{{ item }}"
+
+    - name: Print entire_values
+      debug:
+        var: entire_values

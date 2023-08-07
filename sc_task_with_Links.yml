@@ -6,6 +6,7 @@
     servicenow_instance: "https://dev110810.service-now.com"
     servicenow_user: "admin"
     servicenow_password: "wO+LRiiV17*n"
+    entire_values: []  # Initialize empty list here to hold the API responses
 
   tasks:
     - name: Base64 encode credentials
@@ -31,8 +32,6 @@
         loop_var: item
 
     - name: Make API calls and get entire values
-      vars:
-        entire_values: []
       loop: "{{ sctask_data.json.result }}"
       loop_control:
         loop_var: item
@@ -40,4 +39,3 @@
       vars:
         api_encoded_credentials: "{{ encoded_credentials }}"
         item: "{{ item }}"
-        entire_values: "{{ entire_values }}"

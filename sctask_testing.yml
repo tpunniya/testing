@@ -35,6 +35,13 @@
       loop_control:
         loop_var: item
       register: task_details_output
+
+
+    - name: Extract Request Links 
+      debug: 
+        msg: "Request Link: {{ item }}" 
+      loop: "{{ response.json.result | json_query('[].request_link') }}"
+
     
     - name: Save values into separate variables
       set_fact:

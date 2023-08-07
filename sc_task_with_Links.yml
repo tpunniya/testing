@@ -33,6 +33,9 @@
     - name: Make API calls and get entire values
       vars:
         entire_values: []
+      loop: "{{ sctask_data.json.result }}"
+      loop_control:
+        loop_var: item
       block:
         - name: Make API call for item.request_item.link
           uri:

@@ -1,4 +1,3 @@
----
 - name: Fetch SC Task Data from ServiceNow
   hosts: localhost
   gather_facts: no
@@ -30,53 +29,36 @@
       loop: "{{ sctask_data.json.result }}"
       loop_control:
         loop_var: item
-        
-    - name: Extract Request Links1
+
+    - name: Make API calls and get entire values
       set_fact:
-        request_links_extracted: []
-
-    - name: Extract Requested item Links
-      set_fact:
-        requested_item_extracted: "{{ sctask_data.json.result | map(attribute='request_item.link') | list }}"
-
-    - name: Extract Request Links
-      set_fact:
-          request_links_extracted: "{{ sctask_data.json.result | map(attribute='request.link') | list }}"
-
-    - name: Debug Requested item Extracted
-      debug:
-        var: requested_item_extracted
-
-    - name: Debug Request Links Extracted
-      debug:
-        var: request_links_extracted
-
-
-    - name: Make API calls and extract field values
-      set_fact:
-        extracted_values: []
-      loop: "{{ requested_item_extracted }}"
-      block:        
-        - name: Make API call
+        entire_values: []
+      loop: "{{ sctask_data.json.result }}"
+      block:
+        - name: Make API call for item.request_item.link
           uri:
-            url: "{{ item }}"
+            url: "{{ item.request_item.link }}"
             method: GET
             headers:
               Accept: "application/json"
-              Authorization: "Basic {{ api_encoded_credentials | string }}"
+              Authorization: "Basic {{ encoded_credentials | string }}"
             return_content: yes
-          register: api_response
+          register: item_request_item_response
 
-        - name: Extract field values from API response
+        - name: Make API call for item.request.link
+          uri:
+            url: "{{ item.request.link }}"
+            method: GET
+            headers:
+              Accept: "application/json"
+              Authorization: "Basic {{ encoded_credentials | string }}"
+            return_content: yes
+          register: item_request_response
+
+        - name: Add API responses to entire values
           set_fact:
-            extracted_values: "{{ extracted_values + [item.short_description] }}"
-          loop: "{{ api_response.json.result }}"
-          loop_control:
-            loop_var: item
+            entire_values: "{{ entire_values + [{'sctask_data': item, 'item_request_item_response': item_request_item_response.json.result, 'item_request_response': item_request_response.json.result}] }}"
 
-    - name: Debug Extracted Values
+    - name: Debug Entire Values
       debug:
-        var: extracted_values
-
-    
-        
+        var: entire_values

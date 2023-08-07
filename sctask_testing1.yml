@@ -39,3 +39,16 @@
       set_fact:
         request_links_extracted: "{{ sctask_data.json.result | map(attribute='parent.link') | list }}"
 
+    - name: Debug SC Task Data
+      debug:
+        var: sctask_data.json.result
+
+    - name: Extract Request Links1
+      set_fact:
+          request_links_extracted: "{{ sctask_data.json.result | map(attribute='parent.link') | list }}"
+
+    - name: Debug Request Links Extracted
+      debug:
+        var: request_links_extracted
+
+

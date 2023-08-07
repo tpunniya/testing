@@ -4,7 +4,7 @@
     method: GET
     headers:
       Accept: "application/json"
-      Authorization: "Basic {{ encoded_credentials | string }}"
+      Authorization: "Basic {{ api_encoded_credentials }}"
     return_content: yes
   register: item_request_item_response
 
@@ -14,7 +14,7 @@
     method: GET
     headers:
       Accept: "application/json"
-      Authorization: "Basic {{ encoded_credentials | string }}"
+      Authorization: "Basic {{ api_encoded_credentials }}"
     return_content: yes
   register: item_request_response
 

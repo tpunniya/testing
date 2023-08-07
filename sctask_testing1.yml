@@ -33,11 +33,4 @@
 
     - name: Extract Request Links1
       set_fact:
-      request_links1: "{{ sctask_data.json.result | map(attribute='request_link') | list }}"
-      
-    - name: Extract Request Links1
-      shell: "echo '{{ sctask_data.json.result | to_nice_json }}' | jq -r '.[].request_link'"
-      register: request_links1_result
-
-    - set_fact:
-      request_links1: "{{ request_links1_result.stdout_lines }}"
+      extracted_links: "{{ sctask_data.json.result | map(attribute='request_link') | list }}"

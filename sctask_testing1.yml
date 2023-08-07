@@ -30,11 +30,12 @@
       loop: "{{ sctask_data.json.result }}"
       loop_control:
         loop_var: item
-
+        
     - name: Extract Request Links1
-      debug:
-        var: sctask_data.json.result
-
-    - name: Extract Request Links2
       set_fact:
-        request_links_extracted: "{{ sctask_data.json.result | map(attribute='link') | list }}"
+        request_links_extracted: []
+
+    - name: Loop and extract request links
+      set_fact:
+        request_links_extracted: "{{ request_links_extracted + [item.parent.link] }}"
+      loop: "{{ sctask_data.json.result }}"

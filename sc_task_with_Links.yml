@@ -1,0 +1,82 @@
+---
+- name: Fetch SC Task Data from ServiceNow
+  hosts: localhost
+  gather_facts: no
+
+  vars:
+    servicenow_instance: "https://dev110810.service-now.com"
+    servicenow_user: "admin"
+    servicenow_password: "wO+LRiiV17*n"
+
+  tasks:
+    - name: Base64 encode credentials
+      set_fact:
+        encoded_credentials: "{{ (servicenow_user ~ ':' ~ servicenow_password) | b64encode }}"
+      no_log: true
+
+    - name: Fetch SC Task
+      uri:
+        url: "{{ servicenow_instance }}/api/now/table/sc_task"
+        method: GET
+        headers:
+          Accept: "application/json"
+          Authorization: "Basic {{ encoded_credentials | string }}"
+        return_content: yes
+      register: sctask_data
+
+    - name: Print details
+      debug:
+        msg: "SCTask - Number: {{ item.number }}, Short Description: {{ item.short_description }}, Parent: {{ item.assignment_group.link }}"
+      loop: "{{ sctask_data.json.result }}"
+      loop_control:
+        loop_var: item
+        
+    - name: Extract Request Links1
+      set_fact:
+        request_links_extracted: []
+
+    - name: Extract Requested item Links
+      set_fact:
+        requested_item_extracted: "{{ sctask_data.json.result | map(attribute='request_item.link') | list }}"
+
+    - name: Extract Request Links
+      set_fact:
+          request_links_extracted: "{{ sctask_data.json.result | map(attribute='request.link') | list }}"
+
+    - name: Debug Requested item Extracted
+      debug:
+        var: requested_item_extracted
+
+    - name: Debug Request Links Extracted
+      debug:
+        var: request_links_extracted
+
+
+    - name: Make API calls and extract field values
+      set_fact:
+        extracted_values: []
+      loop: "{{ requested_item_extracted }}"
+      block:        
+        - name: Make API call
+          uri:
+            url: "{{ item }}"
+            method: GET
+            headers:
+              Accept: "application/json"
+              Authorization: "Basic {{ api_encoded_credentials | string }}"
+            return_content: yes
+          register: api_response
+
+        - name: Extract field values from API response
+          set_fact:
+            extracted_values: "{{ extracted_values + [item.short_description] }}"
+          loop: "{{ api_response.json.result }}"
+          loop_control:
+            loop_var: item
+
+    - name: Debug Extracted Values
+      debug:
+        var: extracted_values
+
+    
+        

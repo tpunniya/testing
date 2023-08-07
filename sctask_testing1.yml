@@ -33,7 +33,7 @@
 
     - name: Extract Request Links1
       debug:
-      var: sctask_data.json.result
+        var: sctask_data.json.result
 
     - name: Extract Request Links2
       set_fact:

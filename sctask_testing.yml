@@ -36,6 +36,10 @@
         loop_var: item
       register: task_details_output
 
+    - name: Extract Request Links
+      set_fact:
+      request_links: "{{ sctask_data.json.result | lookup('community.general.json_query', '[].request_link') }}"
+
 
     - name: Extract Request Links 
       debug: 

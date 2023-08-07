@@ -40,3 +40,4 @@
       vars:
         api_encoded_credentials: "{{ encoded_credentials }}"
         item: "{{ item }}"
+        entire_values: "{{ entire_values }}"

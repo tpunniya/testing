@@ -35,11 +35,6 @@
       loop_control:
         loop_var: item
       register: task_details_output
-
-    - name: Extract request.link value
-      set_fact:
-      request_link: "{{ task_details_output.results | json_query('[].msg') | map('regex_findall', 'Parent: (.+)$') | map('first') | list }}"
-
     
     - name: Save values into separate variables
       set_fact:

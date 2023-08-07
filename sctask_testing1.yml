@@ -34,6 +34,7 @@
     - name: Extract Request Links1
       set_fact:
       request_links1: "{{ sctask_data.json.result | map(attribute='request_link') | list }}"
+      
 
 
     - name: Extract Request Links

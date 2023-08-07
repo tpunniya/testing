@@ -50,12 +50,3 @@
         delimiter: ","
         write_header: yes
         content: "{{ entire_values }}"
-      when: ansible_os_family == "Linux"
-
-    - name: Save entire_values to CSV file
-      csv_write:
-        path: "C:\\path\\to\\save\\entire_values.csv"  # For Windows machine
-        delimiter: ","
-        write_header: yes
-        content: "{{ entire_values }}"
-      when: ansible_os_family == "Windows"

@@ -35,7 +35,7 @@
       set_fact:
         request_links_extracted: []
 
-   - name: Extract Request Links1
-     set_fact:
+    - name: Extract Request Links1
+      set_fact:
         request_links_extracted: "{{ request_links_extracted | default([]) + [item.parent.link] }}"
       loop: "{{ sctask_data.json.result }}"

@@ -53,4 +53,5 @@
           "{{ key }}","{{ sub_dict.response }}"
           {% endfor %}
           {% endfor %}
-      when: ansible_distribution == "Ubuntu"
+      when: ansible_system == "Linux"
+

@@ -48,15 +48,16 @@
       debug:
         var: ansible_distribution
 
-
     - name: Save entire_values to CSV file
-      copy:
-        dest: "//home/ec2-user/entire_values.csv"  # For Linux machine
-        content: |
-          {% for value in entire_values %}
-          {% for key, sub_dict in value.items() %}
-          "{{ key }}","{{ sub_dict.response }}"
-          {% endfor %}
-          {% endfor %}
-      when: ansible_system == 'Linux'
-
+      hosts: localhost
+      tasks:
+        - name: Save entire_values to CSV file
+      # Check if the system is Linux
+          when: ansible_system == 'Linux'
+          delegate_to: localhost
+          run_once: true
+          local_action:
+            module: csv_write
+            path: "{{ project_dir }}/api_responses.csv"
+            data: "{{ entire_values }}"
+          ignore_errors: yes

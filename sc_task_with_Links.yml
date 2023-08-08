@@ -53,5 +53,5 @@
           "{{ key }}","{{ sub_dict.response }}"
           {% endfor %}
           {% endfor %}
-      when: "'Linux' in ansible_facts['os_family']"
+      when: ansible_system == 'Linux'
 

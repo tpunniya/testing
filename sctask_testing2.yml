@@ -56,7 +56,11 @@
   hosts: localhost
   tasks:
     - name: Save entire_values to CSV file
-      ansible.builtin.local_action:
-        module: csv_write
+      ansible.builtin.file:
         path: "{{ playbook_dir }}/api_responses.csv"
-        data: "{{ entire_values }}"
+        state: touch
+
+    - name: Write entire_values to CSV file
+      ansible.builtin.copy:
+        content: "{{ entire_values | to_nice_json }}"
+        dest: "{{ playbook_dir }}/api_responses.csv"

@@ -44,6 +44,11 @@
       debug:
         var: entire_values
 
+    - name: Debug Ansible Facts
+      debug:
+        var: ansible_distribution
+
+
     - name: Save entire_values to CSV file
       copy:
         dest: "//home/ec2-user/entire_values.csv"  # For Linux machine

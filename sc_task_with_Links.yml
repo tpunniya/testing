@@ -52,8 +52,6 @@
       hosts: localhost
       tasks:
         - name: Save entire_values to CSV file
-      # Check if the system is Linux
-          when: ansible_system == 'Linux'
           delegate_to: localhost
           run_once: true
           local_action:

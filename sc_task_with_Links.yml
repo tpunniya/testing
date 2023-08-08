@@ -43,20 +43,3 @@
     - name: Print entire_values
       debug:
         var: entire_values
-
-    - name: Debug Ansible Facts
-      debug:
-        var: ansible_distribution
-
-    - name: Debug Variables
-      debug:
-        var: entire_values
-
-    - name: Save entire_values to CSV file
-      hosts: localhost
-      tasks:
-        - name: Save entire_values to CSV file
-          ansible.builtin.local_action:
-            module: csv_write
-            path: "{{ playbook_dir }}/api_responses.csv"
-            data: "{{ entire_values }}"

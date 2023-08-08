@@ -46,7 +46,7 @@
 
     - name: Save entire_values to CSV file
       copy:
-        dest: "/path/to/save/entire_values.csv"  # For Linux machine
+        dest: "//home/ec2-user/entire_values.csv"  # For Linux machine
         content: |
           {% for value in entire_values %}
           {% for key, sub_dict in value.items() %}

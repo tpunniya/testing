@@ -1,0 +1,62 @@
+- name: Fetch SC Task Data from ServiceNow
+  hosts: localhost
+  gather_facts: no
+
+  vars:
+    servicenow_instance: "https://dev110810.service-now.com"
+    servicenow_user: "admin"
+    servicenow_password: "wO+LRiiV17*n"
+    entire_values: []  # Initialize empty list here to hold the API responses
+
+  tasks:
+    - name: Base64 encode credentials
+      set_fact:
+        encoded_credentials: "{{ (servicenow_user ~ ':' ~ servicenow_password) | b64encode }}"
+      no_log: true
+
+    - name: Fetch SC Task
+      uri:
+        url: "{{ servicenow_instance }}/api/now/table/sc_task"
+        method: GET
+        headers:
+          Accept: "application/json"
+          Authorization: "Basic {{ encoded_credentials | string }}"
+        return_content: yes
+      register: sctask_data
+
+    - name: Print details
+      debug:
+        msg: "SCTask - Number: {{ item.number }}, Short Description: {{ item.short_description }}, Parent: {{ item.assignment_group.link }}"
+      loop: "{{ sctask_data.json.result }}"
+      loop_control:
+        loop_var: item
+
+    - name: Make API calls and get entire values
+      loop: "{{ sctask_data.json.result }}"
+      loop_control:
+        loop_var: item
+      include_tasks: get_api_responses.yml
+      vars:
+        api_encoded_credentials: "{{ encoded_credentials }}"
+        item: "{{ item }}"
+
+    - name: Print entire_values
+      debug:
+        var: entire_values
+
+    - name: Debug Ansible Facts
+      debug:
+        var: ansible_distribution
+
+    - name: Debug Variables
+      debug:
+        var: entire_values
+
+- name: Save entire_values to CSV file
+  hosts: localhost
+  tasks:
+    - name: Save entire_values to CSV file
+      ansible.builtin.local_action:
+        module: csv_write
+        path: "{{ playbook_dir }}/api_responses.csv"
+        data: "{{ entire_values }}"

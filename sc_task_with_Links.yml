@@ -58,4 +58,4 @@
             module: csv_write
             path: "{{ project_dir }}/api_responses.csv"
             data: "{{ entire_values }}"
-          ignore_errors: yes
+        

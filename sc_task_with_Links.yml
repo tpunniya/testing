@@ -48,14 +48,15 @@
       debug:
         var: ansible_distribution
 
+    - name: Debug Variables
+      debug:
+        var: entire_values
+
     - name: Save entire_values to CSV file
       hosts: localhost
       tasks:
         - name: Save entire_values to CSV file
-          delegate_to: localhost
-          run_once: true
           local_action:
             module: csv_write
-            path: "{{ project_dir }}/api_responses.csv"
+            path: "{{ playbook_dir }}/api_responses.csv"
             data: "{{ entire_values }}"
-        

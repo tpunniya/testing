@@ -53,15 +53,4 @@
           "{{ key }}","{{ sub_dict.response }}"
           {% endfor %}
           {% endfor %}
-      when: ansible_os_family == "Linux"
-
-    - name: Save entire_values to CSV file
-      win_copy:
-        dest: "C:\\path\\to\\save\\entire_values.csv"  # For Windows machine
-        content: |
-          {% for value in entire_values %}
-          {% for key, sub_dict in value.items() %}
-          "{{ key }}","{{ sub_dict.response }}"
-          {% endfor %}
-          {% endfor %}
-      when: ansible_os_family == "Windows"
+      when: ansible_distribution == "Ubuntu"

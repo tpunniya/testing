@@ -77,7 +77,7 @@
           vars:
             api_encoded_credentials1: "{{ encoded_credentials }}"
             item1: "{{ item1 }}"
-            servicenow_instance: "{{ servicenow_instance }}"
+            servicenow_instance1: "{{ servicenow_instance }}"
           when:
             - item1.sctask_data.state == "1"
             - item1.sctask_data.number is match("^SCTASK")

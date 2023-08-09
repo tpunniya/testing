@@ -72,11 +72,12 @@
         - name: Change SC Task State
           loop: "{{ entire_values }}"
           loop_control:
-            loop_var: item
-          include_tasks: sc_task_status_update.yml.yml
+            loop_var: item1
+          include_tasks: sc_task_status_update.yml
           vars:
-            api_encoded_credentials: "{{ encoded_credentials }}"
-            item: "{{ item }}"
+            api_encoded_credentials1: "{{ encoded_credentials }}"
+            item1: "{{ item1 }}"
+            servicenow_instance: "{{ servicenow_instance }}"
           when:
             - item.sctask_data.state == "1"
             - item.sctask_data.number is match("^SCTASK")

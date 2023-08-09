@@ -62,7 +62,7 @@
       loop_control:
         loop_var: item
       when:
-        - item.state == "1"
+        - item.sctask_data.state == "1"
 
 - name: Save entire_values to CSV file
   hosts: localhost

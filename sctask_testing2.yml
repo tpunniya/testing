@@ -23,6 +23,17 @@
           Authorization: "Basic {{ encoded_credentials | string }}"
         return_content: yes
       register: sctask_data
+      failed_when: sctask_data.failed  # Fail task if unable to connect API
+
+    - name: Filter SCTasks with open state and SCTASK number
+      set_fact:
+        filtered_sctasks: "{{ sctask_data.json.result | selectattr('state', 'equalto', '1') | selectattr('number', 'match', '^SCTASK') | list }}"
+
+    - name: Fail if no suitable SCTasks found
+      fail:
+        msg: "No SCTask found with either open state or number not starting with SCTASK"
+      when: filtered_sctasks | length == 0
+
 
     - name: Print details
       debug:
@@ -32,7 +43,7 @@
         loop_var: item
 
     - name: Make API calls and get entire values
-      loop: "{{ sctask_data.json.result }}"
+      loop: "{{ filtered_sctasks }}"
       loop_control:
         loop_var: item
       include_tasks: get_api_responses.yml

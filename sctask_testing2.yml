@@ -36,19 +36,20 @@
         - item.state == "open"
         - item.number is match("^SCTASK")
 
+
+- name: Save entire_values to CSV file
+  hosts: localhost
+  tasks:
     - name: Save entire_values to CSV file
-      hosts: localhost
-      tasks:
-        - name: Save entire_values to CSV file
-          ansible.builtin.file:
-            path: "{ playbook_dir }}/api_responses.csv"
-            state: touch
+      ansible.builtin.file:
+        path: "{{ playbook_dir }}/api_responses.csv"
+        state: touch
 
-        - name: Write entire_values to CSV file
-          ansible.builtin.copy:
-            content: "{{ entire_values | to_nice_json }}"
-            dest: "{ playbook_dir }}/api_responses.csv"
+    - name: Write entire_values to CSV file
+      ansible.builtin.copy:
+        content: "{{ entire_values | to_nice_json }}"
+        dest: "{{ playbook_dir }}/api_responses.csv"
 
-        - name: Debug Variables
-          debug:
-            var: playbook_dir
+    - name: Debug Variables
+      debug:
+        var: playbook_dir

@@ -49,7 +49,7 @@
 
     - name: Change SC Task State
       uri:
-        url: "{{ servicenow_instance }}/api/now/table/sc_task/{{ item.sys_id }}"
+        url: "{{ servicenow_instance }}/api/now/table/sc_task/{{ item.sctask_data.sys_id }}"
         method: PATCH
         headers:
           Accept: "application/json"

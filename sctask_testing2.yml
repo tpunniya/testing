@@ -23,8 +23,8 @@
             Accept: "application/json"
             Authorization: "Basic {{ encoded_credentials | string }}"
           return_content: yes
-        register: sctask_data
-        failed_when: sctask_data.failed  # Fail task if unable to connect API
+      register: sctask_data
+      failed_when: sctask_data.failed  # Fail task if unable to connect API
 
       rescue:
         - name: Handle Block 1 Error

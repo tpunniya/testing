@@ -47,13 +47,22 @@
       debug:
         var: entire_values
 
-    - name: Debug Ansible Facts
-      debug:
-        var: ansible_distribution
-
-    - name: Debug Variables
-      debug:
-        var: entire_values
+    - name: Change SC Task State
+      uri:
+        url: "{{ servicenow_instance }}/api/now/table/sc_task/{{ item.sys_id }}"
+        method: PATCH
+        headers:
+          Accept: "application/json"
+          Authorization: "Basic {{ encoded_credentials | string }}"
+          "Content-Type": "application/json"
+        body_format: json
+        body:
+          state: "2"
+      loop: "{{ entire_values }}"
+      loop_control:
+        loop_var: item
+      when:
+        - item.state == "1"
 
 - name: Save entire_values to CSV file
   hosts: localhost

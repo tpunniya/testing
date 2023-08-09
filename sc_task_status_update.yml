@@ -2,11 +2,11 @@
   block:
     - name: Change SC Task State 
       uri:
-        url: "{{ servicenow_instance }}/api/now/table/sc_task/{{ item.sctask_data.sys_id }}"
+        url: "{{ servicenow_instance }}/api/now/table/sc_task/{{ item1.sctask_data.sys_id }}"
         method: PATCH
         headers:
           Accept: "application/json"
-          Authorization: "Basic {{  api_encoded_credentials | string }}"
+          Authorization: "Basic {{  api_encoded_credentials1 | string }}"
           "Content-Type": "application/json"
         body_format: json
         body:

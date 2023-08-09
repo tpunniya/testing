@@ -24,6 +24,13 @@
         return_content: yes
       register: sctask_data
 
+    - name: Print details
+      debug:
+        msg: "SCTask - Number: {{ item.number }}, Short Description: {{ item.short_description }}, Parent: {{ item.assignment_group.link }}"
+      loop: "{{ sctask_data.json.result }}"
+      loop_control:
+        loop_var: item
+
     - name: Make API calls and get entire values
       loop: "{{ sctask_data.json.result }}"
       loop_control:
@@ -33,9 +40,20 @@
         api_encoded_credentials: "{{ encoded_credentials }}"
         item: "{{ item }}"
       when:
-        - item.state == "open"
+        - item.state == "1"
         - item.number is match("^SCTASK")
 
+    - name: Print entire_values
+      debug:
+        var: entire_values
+
+    - name: Debug Ansible Facts
+      debug:
+        var: ansible_distribution
+
+    - name: Debug Variables
+      debug:
+        var: entire_values
 
 - name: Save entire_values to CSV file
   hosts: localhost

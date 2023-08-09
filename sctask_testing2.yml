@@ -57,13 +57,13 @@
   tasks:
     - name: Save entire_values to CSV file
       ansible.builtin.file:
-        path: "https://github.com/tpunniya/testing/tree/main/api_responses.csv"
+        path: "/var/lib/awx/projects/api_responses.csv"
         state: touch
 
     - name: Write entire_values to CSV file
       ansible.builtin.copy:
         content: "{{ entire_values | to_nice_json }}"
-        dest: "https://github.com/tpunniya/testing/tree/main/api_responses.csv"
+        dest: "/var/lib/awx/projects/api_responses.csv"
 
     - name: Debug Variables
       debug:

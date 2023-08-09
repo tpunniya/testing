@@ -14,17 +14,18 @@
         encoded_credentials: "{{ (servicenow_user ~ ':' ~ servicenow_password) | b64encode }}"
       no_log: true
 
-    - name: Fetch SC Task
+    - name: Fetch SC Task - Main
       block:
-        uri:
-          url: "{{ servicenow_instance }}/api/now/table/sc_task"
-          method: GET
-          headers:
-            Accept: "application/json"
-            Authorization: "Basic {{ encoded_credentials | string }}"
-          return_content: yes
-      register: sctask_data
-      failed_when: sctask_data.failed  # Fail task if unable to connect API
+        - name: Fetch SC Task
+          uri:
+            url: "{{ servicenow_instance }}/api/now/table/sc_task"
+            method: GET
+            headers:
+              Accept: "application/json"
+              Authorization: "Basic {{ encoded_credentials | string }}"
+            return_content: yes
+          register: sctask_data
+          failed_when: sctask_data.failed  # Fail task if unable to connect API
 
       rescue:
         - name: Handle Block 1 Error
@@ -48,7 +49,7 @@
       loop_control:
         loop_var: item
 
-    - name: Make API calls and get entire values
+    - name: Make API calls and get entire values-main
       block:
         loop: "{{ filtered_sctasks }}"
         loop_control:

@@ -24,13 +24,6 @@
         return_content: yes
       register: sctask_data
 
-    - name: Print details
-      debug:
-        msg: "SCTask - Number: {{ item.number }}, Short Description: {{ item.short_description }}, Parent: {{ item.assignment_group.link }}"
-      loop: "{{ sctask_data.json.result }}"
-      loop_control:
-        loop_var: item
-
     - name: Make API calls and get entire values
       loop: "{{ sctask_data.json.result }}"
       loop_control:
@@ -39,32 +32,23 @@
       vars:
         api_encoded_credentials: "{{ encoded_credentials }}"
         item: "{{ item }}"
+      when:
+        - item.state == "open"
+        - item.number is match("^SCTASK")
 
-    - name: Print entire_values
-      debug:
-        var: entire_values
-
-    - name: Debug Ansible Facts
-      debug:
-        var: ansible_distribution
-
-    - name: Debug Variables
-      debug:
-        var: entire_values
-
-- name: Save entire_values to CSV file
-  hosts: localhost
-  tasks:
     - name: Save entire_values to CSV file
-      ansible.builtin.file:
-        path: "/var/lib/awx/projects/api_responses.csv"
-        state: touch
+      hosts: localhost
+      tasks:
+        - name: Save entire_values to CSV file
+          ansible.builtin.file:
+            path: "/var/lib/awx/projects/api_responses.csv"
+            state: touch
 
-    - name: Write entire_values to CSV file
-      ansible.builtin.copy:
-        content: "{{ entire_values | to_nice_json }}"
-        dest: "/var/lib/awx/projects/api_responses.csv"
+        - name: Write entire_values to CSV file
+          ansible.builtin.copy:
+            content: "{{ entire_values | to_nice_json }}"
+            dest: "/var/lib/awx/projects/api_responses.csv"
 
-    - name: Debug Variables
-      debug:
-        var: playbook_dir
+        - name: Debug Variables
+          debug:
+            var: playbook_dir

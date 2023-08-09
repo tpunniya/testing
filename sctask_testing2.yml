@@ -51,16 +51,17 @@
 
     - name: Make API calls and get entire values-main
       block:
-        loop: "{{ filtered_sctasks }}"
-        loop_control:
-          loop_var: item
-        include_tasks: get_api_responses.yml
-        vars:
-          api_encoded_credentials: "{{ encoded_credentials }}"
-          item: "{{ item }}"
-        when:
-          - item.state == "1"
-          - item.number is match("^SCTASK")
+        - name: Make API calls and get entire values
+          loop: "{{ filtered_sctasks }}"
+          loop_control:
+            loop_var: item
+          include_tasks: get_api_responses.yml
+          vars:
+            api_encoded_credentials: "{{ encoded_credentials }}"
+            item: "{{ item }}"
+          when:
+            - item.state == "1"
+            - item.number is match("^SCTASK")
       rescue:
         - name: Handle Block 2 -Make API calls and get entire values
           debug:
@@ -71,23 +72,24 @@
       debug:
         var: entire_values
 
-    - name: Change SC Task State
+    - name: Change SC Task State - mail
       block:
-        uri:
-          url: "{{ servicenow_instance }}/api/now/table/sc_task/{{ item.sctask_data.sys_id }}"
-          method: PATCH
-          headers:
-            Accept: "application/json"
-            Authorization: "Basic {{ encoded_credentials | string }}"
-            "Content-Type": "application/json"
-          body_format: json
-          body:
-            state: "2"
-        loop: "{{ entire_values }}"
-        loop_control:
-          loop_var: item
-        when:
-          - item.sctask_data.state == "1"
+        - name: Change SC Task State 
+          uri:
+            url: "{{ servicenow_instance }}/api/now/table/sc_task/{{ item.sctask_data.sys_id }}"
+            method: PATCH
+            headers:
+              Accept: "application/json"
+              Authorization: "Basic {{ encoded_credentials | string }}"
+              "Content-Type": "application/json"
+            body_format: json
+            body:
+              state: "2"
+          loop: "{{ entire_values }}"
+          loop_control:
+            loop_var: item
+          when:
+            - item.sctask_data.state == "1"
       rescue:
         - name: Handle Block - SCTASK Status change
           debug:

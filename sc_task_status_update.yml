@@ -1,0 +1,24 @@
+- name: Change SC Task State - mail
+  block:
+    - name: Change SC Task State 
+      uri:
+        url: "{{ servicenow_instance }}/api/now/table/sc_task/{{ item.sctask_data.sys_id }}"
+        method: PATCH
+        headers:
+          Accept: "application/json"
+          Authorization: "Basic {{  api_encoded_credentials | string }}"
+          "Content-Type": "application/json"
+        body_format: json
+        body:
+          state: "2"
+      loop: "{{ entire_values }}"
+      loop_control:
+        loop_var: item
+      when:
+        - item.sctask_data.state == "1"
+    
+  rescue:
+    - name: Handle Block - SCTASK Status change
+      debug:
+        msg: "Error occurred while changing the SCTASK status"
+     

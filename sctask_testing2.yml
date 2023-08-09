@@ -79,8 +79,8 @@
             item1: "{{ item1 }}"
             servicenow_instance: "{{ servicenow_instance }}"
           when:
-            - item.sctask_data.state == "1"
-            - item.sctask_data.number is match("^SCTASK")
+            - item1.sctask_data.state == "1"
+            - item1.sctask_data.number is match("^SCTASK")
       rescue:
         - name: Handle Block - SCTASK Status change
           debug:

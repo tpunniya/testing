@@ -41,15 +41,17 @@
       fail:
         msg: "No SCTask found with either open state or number not starting with SCTASK"
       when: filtered_sctasks | length == 0
-      rescue:
-        - name: Handle Block - SCTask not found
-          mail:
-            host: smtp.office365.com
-            port: 25
-            to: thiruniraiselvi.punniyakotti@capgemini.com
-            subject: "Ansible Playbook Failed"
-            body: "The Ansible playbook failed because no suitable SCTasks were found."
 
+    - name: Send Email on Failure
+      mail:
+        host: smtp.office365.com
+        port: 25
+        to: mailid@example.com
+        subject: "Ansible Playbook Failed"
+        body: "The Ansible playbook failed because no suitable SCTasks were found."
+      failed_when: true  # This makes the task run only in case of failure
+      always_run: yes
+  
     - name: Print details
       debug:
         msg: "SCTask - Number: {{ item.number }}, Short Description: {{ item.short_description }}, Parent: {{ item.assignment_group.link }}"

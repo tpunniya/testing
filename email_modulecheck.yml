@@ -1,0 +1,10 @@
+- name: Send e-mail to a bunch of users, attaching files
+  community.general.mail:
+    host: localhost
+    port: 25
+    subject: Ansible-report
+    body: test email
+    from: thiruniraiselvi.punniyakotti@capgemini.com
+    to: thiruniraiselvi.punniyakotti@capgemini.com
+    charset: us-ascii
+  delegate_to: localhost

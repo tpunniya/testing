@@ -46,7 +46,7 @@
       mail:
         host: smtp.office365.com
         port: 25
-        to: mailid@example.com
+        to: thiruniraiselvi.punniyakotti@capgemini.com
         subject: "Ansible Playbook Failed"
         body: "The Ansible playbook failed because no suitable SCTasks were found."
       failed_when: true  # This makes the task run only in case of failure

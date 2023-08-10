@@ -41,6 +41,17 @@
       fail:
         msg: "No SCTask found with either open state or number not starting with SCTASK"
       when: filtered_sctasks | length == 0
+      rescue:
+        - name: Handle Block - SCTask not found
+          debug:
+            msg: "No SCTask found with either open state or number not starting with SCTASK"
+          # Add email notification for failure
+          mail:
+            host: smtp.office365.com
+            port: 25
+            to: thiruniraiselvi.punniyakotti@example.com
+            subject: "Ansible Playbook Failed"
+            body: "The Ansible playbook failed because no suitable SCTasks were found."
 
     - name: Print details
       debug:

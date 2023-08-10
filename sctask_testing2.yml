@@ -27,11 +27,26 @@
           register: sctask_data
           failed_when: sctask_data.failed  # Fail task if unable to connect API
 
+        - name: Handle Fetch SC Task Failure
+          mail:
+            host: smtp.office365.com
+            port: 25
+            to: thiruniraiselvi.punniyakotti@capgemini.com
+            subject: "Ansible Playbook Success"
+            body: "The Ansible playbook Success while trying to fetch SC Task data."
+
       rescue:
         - name: Handle Block 1 Error
           debug:
             msg: "Error occurred while fetching sctask data - {{ sctask_data.failed }}"
 
+        - name: Handle Fetch SC Task Failure
+          mail:
+            host: smtp.office365.com
+            port: 25
+            to: thiruniraiselvi.punniyakotti@capgemini.com
+            subject: "Ansible Playbook Failed"
+            body: "The Ansible playbook failed while trying to fetch SC Task data."
 
     - name: Filter SCTasks with open state and SCTASK number
       set_fact:
@@ -42,16 +57,6 @@
         msg: "No SCTask found with either open state or number not starting with SCTASK"
       when: filtered_sctasks | length == 0
 
-    - name: Send Email on Failure
-      mail:
-        host: smtp.office365.com
-        port: 25
-        to: thiruniraiselvi.punniyakotti@capgemini.com
-        subject: "Ansible Playbook Failed"
-        body: "The Ansible playbook failed because no suitable SCTasks were found."
-      failed_when: true  # This makes the task run only in case of failure
-      always_run: yes
-  
     - name: Print details
       debug:
         msg: "SCTask - Number: {{ item.number }}, Short Description: {{ item.short_description }}, Parent: {{ item.assignment_group.link }}"

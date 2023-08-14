@@ -1,14 +1,9 @@
 ---
-- name: Install community.general collection and send e-mail
+- name: send e-mail
   hosts: localhost
   gather_facts: false
 
   tasks:
-    - name: Install community.general collection
-      community.general.ansible_galaxy:
-        name: community.general
-        state: present
-
     - name: Send e-mail to a bunch of users, attaching files
       community.general.mail:
         host: localhost

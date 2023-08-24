@@ -3,9 +3,9 @@
   gather_facts: no
 
   vars:
-    servicenow_instance: "https://dev110810.service-now.com"
+    servicenow_instance: "https://dev121241.service-now.com"
     servicenow_user: "admin"
-    servicenow_password: "wO+LRiiV17*n"
+    servicenow_password: "U+$PZb6ikn3X"
     entire_values: []  # Initialize empty list here to hold the API responses
 
   tasks:

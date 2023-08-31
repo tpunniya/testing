@@ -10,7 +10,7 @@
         login_port: "30517"
         login_password: "IRONMAN"
         login_db: cat
-        query: "SELECT * FROM `cat-table`;"
+        query: "SELECT * FROM `credId-details`;"
       register: query_result
     - name: Debug Query Result
       debug:

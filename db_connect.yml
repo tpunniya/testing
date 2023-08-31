@@ -10,7 +10,7 @@
         login_port: "30517"
         login_password: "IRONMAN"
         login_db: incidentdata
-        query: "SELECT * FROM `credId-details`;"
+        query: "SELECT * FROM `config_table`;"
       register: query_result
     - name: Debug Query Result
       debug:

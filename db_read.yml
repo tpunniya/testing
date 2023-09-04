@@ -10,7 +10,7 @@
         login_port: "30517"
         login_password: "IRONMAN"
         login_db: taskdata
-        query: "SELECT * FROM `ci_details`;"
+        query: "SELECT OS FROM `ci_details` WHERE ci_name LIKE "ANNIE-IBM";"
       register: query_result
     - name: Debug Query Result
       debug:

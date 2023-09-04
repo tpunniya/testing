@@ -101,3 +101,11 @@
     - name: Debug Variables
       debug:
         var: playbook_dir
+
+    - name: Required output
+      set_fact:
+        filtered_data: "Openedat : {{ sctask_data.opened_at }}, cmdb_ci: {{ sctask_data.cmdb_ci }}, short_description: {{ sctask_data.short_description }},State: {{ sctask_data.state }}, sysid: {{ sctask_data.sys_id }}, requestedfor: {{ sctask_data.requested_for.value }}, requestedfor_name: {{ sctask_data.requested_for.name }}, cat_item_value: {{ item_request_item_response.cat_item.value }}, cat_item_value: {{ item_request_item_response.cat_item.name }}, ritm: {{ item_request_item_response.number }}, requestedfor: {{ request.requested_for.value }}, requestedfor_name: {{ request.requested_for.name }}"
+
+    - name: Debug Variables
+      debug:
+        var: filtered_data

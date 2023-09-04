@@ -104,7 +104,7 @@
 
     - name: Required output
       set_fact:
-        filtered_data: "Openedat : {{ entire_values.sctask_data.opened_at }}, cmdb_ci: {{ entire_values.sctask_data.cmdb_ci }}, short_description: {{ entire_values.sctask_data.short_description }},State: {{ entire_values.sctask_data.state }}, sysid: {{ entire_values.sctask_data.sys_id }}, requestedfor: {{ sctask_data.requested_for.value }}, requestedfor_name: {{ sctask_data.requested_for.name }}, cat_item_value: {{ entire_values.request_item_response.cat_item.value }}, cat_item_value: {{ entire_values.item_response.cat_item.name }}, ritm: {{ entire_values.request_item_response.number }}, requestedfor: {{ entire_values.request.requested_for.value }}, requestedfor_name: {{ entire_values.request.requested_for.name }}"
+        filtered_data: "Openedat : {{ entire_values.item.sctask_data.opened_at }}, cmdb_ci: {{ entire_values.item.sctask_data.cmdb_ci }}, short_description: {{ entire_values.item.sctask_data.short_description }},State: {{ entire_values.item.sctask_data.state }}, sysid: {{ entire_values.item.sctask_data.sys_id }}, requestedfor: {{ entire_values.item.sctask_data.requested_for.value }}, requestedfor_name: {{ entire_values.item.sctask_data.requested_for.name }}, cat_item_value: {{ entire_values.item.request_item_response.cat_item.value }}, cat_item_value: {{ entire_values.item.item_response.cat_item.name }}, ritm: {{ entire_values.item.request_item_response.number }}, requestedfor: {{ entire_values.item.request.requested_for.value }}, requestedfor_name: {{ entire_values.item.request.requested_for.name }}"
 
     - name: Debug Variables
       debug:

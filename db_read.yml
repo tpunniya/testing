@@ -16,3 +16,16 @@
     - name: Debug Query Result
       debug:
         var: query_result
+    - name: Extract Value from First Query Result (assuming it's in JSON format)
+      set_fact:
+        extracted_value: "{{ first_query_result.stdout | from_json }}.os"
+
+    - name: Execute MySQL Query
+      community.mysql.mysql_query:
+         query1: 'SELECT * FROM `credId` where OS LIKE '{{ extracted_value }}';'
+      register: query_result1
+    - name: Debug Query Result
+      debug:
+        var: query_result1
+
+

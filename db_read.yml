@@ -16,6 +16,13 @@
     - name: Debug Query Result
       debug:
         var: query_result
+
+    - name: Debug Query Result
+      debug:
+        var: query_result.OS
+
+
+        
     - name: Extract Value from First Query Result (assuming it's in JSON format)
       set_fact:
         extracted_value: "{{ query_result.stdout | from_json }}"

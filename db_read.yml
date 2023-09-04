@@ -18,7 +18,7 @@
         var: query_result
     - name: Extract Value from First Query Result (assuming it's in JSON format)
       set_fact:
-        extracted_value: "{{ first_query_result.stdout | from_json }}.os"
+        extracted_value: "{{ query_result.stdout | from_json }}.os"
 
     - name: Execute MySQL Query
       community.mysql.mysql_query:

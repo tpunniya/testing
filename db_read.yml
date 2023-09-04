@@ -2,7 +2,6 @@
   hosts: localhost
   vars:
     host: "194.195.112.205"
-    cmdb_Ci: "ANNIE-IBM"
   tasks:
     - name: Execute MySQL Query
       community.mysql.mysql_query:

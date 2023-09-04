@@ -10,7 +10,7 @@
         login_port: "30517"
         login_password: "IRONMAN"
         login_db: taskdata
-        query: "SELECT * FROM `configdetail`;"
+        query: "SELECT * FROM `ci_details`;"
       register: query_result
     - name: Debug Query Result
       debug:

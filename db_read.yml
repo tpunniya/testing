@@ -1,0 +1,18 @@
+- name: getting os from MySQL
+  hosts: localhost
+  vars:
+    host: "194.195.112.205"
+    cmdb_Ci:"ANNIE-IBM"
+  tasks:
+    - name: Execute MySQL Query
+      community.mysql.mysql_query:
+        login_host: "{{ host }}"
+        login_user: "root"
+        login_port: "30517"
+        login_password: "IRONMAN"
+        login_db: tasktdata
+        query: "SELECT OS FROM ci_details WHERE ci_name LIKE '{{ cmdb_Ci }}';"
+      register: query_result
+    - name: Debug Query Result
+      debug:
+        var: query_result

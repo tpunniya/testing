@@ -122,8 +122,6 @@
             'short_description': sctask_data.short_description,
             'state': sctask_data.state,
             'sys_id': sctask_data.sys_id,
-            'requested_for': sctask_data.requested_for.value,
-            'requested_for_name': sctask_data.requested_for.name
           },
           'item_request_item_response': {
             'cat_item_value': item_request_item_response.cat_item.value,

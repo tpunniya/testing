@@ -17,9 +17,9 @@
       debug:
         var: query_result
 
-    - name: Debug Query Result
+    - name: Debug Query Result1
       debug:
-        var: query_result.OS
+        var: query_result.[0][0].OS
 
 
         

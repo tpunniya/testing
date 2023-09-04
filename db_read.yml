@@ -9,8 +9,8 @@
         login_user: "root"
         login_port: "30517"
         login_password: "IRONMAN"
-        login_db: incidentdata
-        query: "SELECT * FROM `template_details`;"
+        login_db: taskdata
+        query: "SELECT * FROM `configdetail`;"
       register: query_result
     - name: Debug Query Result
       debug:

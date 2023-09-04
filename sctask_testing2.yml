@@ -124,13 +124,11 @@
             'sys_id': sctask_data.sys_id,
           },
           'item_request_item_response': {
-            'cat_item_value': item_request_item_response.cat_item.value,
-            #'cat_item_name': item_request_item_response.cat_item.name
+            'cat_item_value': item_request_item_response.cat_item.value
           },
           'item_request_response': {
             'ritm': item_request_response.number,
-            'requestedfor_req': item_request_response.requested_for.value,
-            #'requestedfor_name_req': item_request_response.requested_for.name
+            'requestedfor_req': item_request_response.requested_for.value
           }
         }] }}"
       loop: "{{ entire_values }}"

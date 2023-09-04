@@ -1,4 +1,4 @@
-- name: getting os from MySQL
+- name: hitting Data from MySQL
   hosts: localhost
   vars:
     host: "194.195.112.205"
@@ -9,8 +9,8 @@
         login_user: "root"
         login_port: "30517"
         login_password: "IRONMAN"
-        login_db: "tasktdata"
-        query: "SELECT * FROM `ci_details`;"
+        login_db: incidentdata
+        query: "SELECT * FROM `template_details`;"
       register: query_result
     - name: Debug Query Result
       debug:

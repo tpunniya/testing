@@ -102,45 +102,41 @@
       debug:
         var: playbook_dir
 
-    - name: Extract and Display Required Fields
-      hosts: localhost
-      gather_facts: no
-      tasks:
-        - name: Extract and collect fields
-          set_fact:
-            filtered_data: []
+    - name: Extract and collect fields
+      set_fact:
+        filtered_data: []
 
-        - name: Iterate through entire_values
-          loop: "{{ entire_values }}"
-          set_fact:
-            sctask_data: "{{ item.sctask_data }}"
-            item_request_item_response: "{{ item.item_request_item_response }}"
-            item_request_response: "{{ item.item_request_response }}"
+    - name: Iterate through entire_values
+      loop: "{{ entire_values }}"
+      set_fact:
+        sctask_data: "{{ item.sctask_data }}"
+        item_request_item_response: "{{ item.item_request_item_response }}"
+        item_request_response: "{{ item.item_request_response }}"
       
-        - name: Add selected fields to filtered_data
-          set_fact:
-            filtered_data: "{{ filtered_data + [{
-              'sctask_data': {
-                'opened_at': sctask_data.opened_at,
-                'cmdb_ci': sctask_data.cmdb_ci.value,
-                'short_description': sctask_data.short_description,
-                'state': sctask_data.state,
-                'sys_id': sctask_data.sys_id,
-                'requested_for': sctask_data.requested_for.value,
-                'requested_for_name': sctask_data.requested_for.name
-              },
-              'item_request_item_response': {
-                'cat_item_value': item_request_item_response.cat_item.value,
-                'cat_item_name': item_request_item_response.cat_item.name
-              },
-              'item_request_response': {
-                'ritm': item_request_response.number,
-                'requestedfor_req': item_request_response.requested_for.value,
-                'requestedfor_name_req': item_request_response.requested_for.name
-              }
-            }] }}"
-          loop: "{{ entire_values }}"
+    - name: Add selected fields to filtered_data
+      set_fact:
+        filtered_data: "{{ filtered_data + [{
+          'sctask_data': {
+            'opened_at': sctask_data.opened_at,
+            'cmdb_ci': sctask_data.cmdb_ci.value,
+            'short_description': sctask_data.short_description,
+            'state': sctask_data.state,
+            'sys_id': sctask_data.sys_id,
+            'requested_for': sctask_data.requested_for.value,
+            'requested_for_name': sctask_data.requested_for.name
+          },
+          'item_request_item_response': {
+            'cat_item_value': item_request_item_response.cat_item.value,
+            'cat_item_name': item_request_item_response.cat_item.name
+          },
+          'item_request_response': {
+            'ritm': item_request_response.number,
+            'requestedfor_req': item_request_response.requested_for.value,
+            'requestedfor_name_req': item_request_response.requested_for.name
+          }
+        }] }}"
+      loop: "{{ entire_values }}"
     
-        - name: Debug Variables
-          debug:
-            var: filtered_data
+    - name: Debug Variables
+      debug:
+        var: filtered_data

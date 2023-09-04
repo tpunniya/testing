@@ -19,7 +19,10 @@
     - name: Extract Value from First Query Result (assuming it's in JSON format)
       set_fact:
         extracted_value: "{{ query_result.stdout | from_json }}"
-
+    - name: Debug Extracted Value
+      debug:
+        var: extracted_value.os  # Replace 'os' with the actual key in your JSON object
+  
     - name: Execute MySQL Query
       community.mysql.mysql_query:
          query1: "SELECT * FROM `credId` where OS LIKE '{{ extracted_value.OS }}';"

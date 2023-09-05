@@ -11,3 +11,19 @@
       debug:
         var: aws_credentials
 
+---
+- name: Check Service Status on Ubuntu
+  hosts: "{{ targetgroup }}"
+  gather_facts: true
+
+  tasks:
+    - name: Get Service Status
+      systemd:
+        name: "{{ service_name }}"
+        register: service_status
+
+    - name: Display Service Status
+      debug:
+        var: service_status
+
+

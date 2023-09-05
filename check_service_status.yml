@@ -5,7 +5,7 @@
     - name: Retrieve AWS Credentials
       ansible.builtin.template
       set_fact:
-        aws_credentials: "{{ lookup('template') }}"
+        aws_credentials: "{{ lookup('tower_credential', 'ansible-tower') }}"
       delegate_to: localhost
 
     - name: Use AWS Credentials

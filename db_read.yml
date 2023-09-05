@@ -19,7 +19,7 @@
 
     - name: Debug Query Result1
       debug:
-        var: query_result.OS
+        var: query_result.query_result[0][0].OS
      
     - name: Extract Value from First Query Result (assuming it's in JSON format)
       set_fact:

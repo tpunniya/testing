@@ -1,0 +1,13 @@
+---
+- name: Retrieve AWS Credentials
+  hosts: localhost
+  tasks:
+    - name: Retrieve AWS Credentials
+      set_fact:
+        aws_credentials: "{{ lookup('tower_credential', 'ansible-tower') }}"
+      delegate_to: localhost
+
+    - name: Use AWS Credentials
+      debug:
+        var: aws_credentials
+

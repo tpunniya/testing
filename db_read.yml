@@ -32,7 +32,7 @@
   
     - name: Execute MySQL Query
       community.mysql.mysql_query:
-         query1: "SELECT * FROM `credId` where OS LIKE '{{ extracted_value }}';"
+         query: "SELECT * FROM `credId` where OS LIKE '{{ extracted_value }}';"
       register: query_result1
       
     - name: Debug Query Result

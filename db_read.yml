@@ -38,4 +38,16 @@
       debug:
         var: query_result1
 
+    - name: Get Credential
+      awx.awx.awx_credential:
+        name: "snowcred_selvi"  # Replace with the actual credential name
+        org: "Default"      # Replace with the organization where the credential is located
+      delegate_to: localhost
+      register: my_credential
+
+    - name: Cred Result
+      debug:
+        var: my_credential
+
+
 

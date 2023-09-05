@@ -3,6 +3,7 @@
   hosts: localhost
   tasks:
     - name: Retrieve AWS Credentials
+      ansible.builtin.template
       set_fact:
         aws_credentials: "{{ lookup('template') }}"
       delegate_to: localhost

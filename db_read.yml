@@ -45,13 +45,5 @@
         var: query_result1
 
 
-    - name: Retrieve AWS Credentials
-      set_fact:
-        aws_credentials: "{{ lookup('tower_credential', 'snowcred_selvi') }}"
-      delegate_to: localhost
-
-    - name: Use AWS Credentials
-      debug:
-        var: aws_credentials
 
 

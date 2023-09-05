@@ -1,14 +1,12 @@
 ---
-- name: Check Service Status on Ubuntu
-  hosts: "{{ targetgroup }}"
-  gather_facts: true
-
+- name: Retrieve AWS Credentials
+  hosts: localhost
   tasks:
-    - name: Get Service Status
-      systemd:
-        name: "{{ service_name }}"
-        register: service_status
+    - name: Retrieve AWS Credentials
+      set_fact:
+        aws_credentials: "{{ lookup('tower_credential', 'ansible-tower') }}"
+      delegate_to: localhost
 
-    - name: Display Service Status
+    - name: Use AWS Credentials
       debug:
-        var: service_status
+        var: aws_credentials

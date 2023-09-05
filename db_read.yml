@@ -20,9 +20,7 @@
     - name: Debug Query Result1
       debug:
         var: query_result.[0][0].OS
-
-
-        
+     
     - name: Extract Value from First Query Result (assuming it's in JSON format)
       set_fact:
         extracted_value: "{{ query_result.stdout | from_json }}"
@@ -38,16 +36,14 @@
       debug:
         var: query_result1
 
-    - name: Get Credential
-      awx.awx.awx_credential:
-        name: "snowcred_selvi"  # Replace with the actual credential name
-        org: "Default"      # Replace with the organization where the credential is located
+
+    - name: Retrieve AWS Credentials
+      set_fact:
+        aws_credentials: "{{ lookup('tower_credential', 'snowcred_selvi') }}"
       delegate_to: localhost
-      register: my_credential
 
-    - name: Cred Result
+    - name: Use AWS Credentials
       debug:
-        var: my_credential
-
+        var: aws_credentials
 
 

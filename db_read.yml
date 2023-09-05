@@ -32,7 +32,12 @@
   
     - name: Execute MySQL Query
       community.mysql.mysql_query:
-         query: "SELECT * FROM `credId` where OS LIKE '{{ extracted_value }}';"
+        login_host: "{{ host }}"
+        login_user: "root"
+        login_port: "30517"
+        login_password: "IRONMAN"
+        login_db: taskdata
+        query: "SELECT * FROM `credId` where OS LIKE '{{ extracted_value }}';"
       register: query_result1
       
     - name: Debug Query Result

@@ -1,0 +1,17 @@
+- name: hitting Data from MySQL
+  hosts: localhost
+  vars:
+    host: "database-1.cpt56hhgq7lv.ap-south-1.rds.amazonaws.com"
+  tasks:
+    - name: Execute MySQL Query
+      community.mysql.mysql_query:
+        login_host: "{{ host }}"
+        login_user: "admin"
+        login_port: "3306"
+        login_password: "ansible123"
+        login_db: incidentdata
+        query: "SELECT * FROM `template_details`;"
+      register: query_result
+    - name: Debug Query Result
+      debug:
+        var: query_result
